@@ -1,0 +1,299 @@
+{
+  "Resources": {
+    "vpcstagingF0BF23A4": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.74.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/Resource"
+      }
+    },
+    "vpcstagingIngressSubnet1Subnet9C6D6AEE": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.74.0.0/24",
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "AvailabilityZone": "ca-central-1a",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/Subnet"
+      }
+    },
+    "vpcstagingIngressSubnet1RouteTableFD76C638": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/RouteTable"
+      }
+    },
+    "vpcstagingIngressSubnet1RouteTableAssociation341238F6": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet1RouteTableFD76C638"
+        },
+        "SubnetId": {
+          "Ref": "vpcstagingIngressSubnet1Subnet9C6D6AEE"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/RouteTableAssociation"
+      }
+    },
+    "vpcstagingIngressSubnet1DefaultRoute8755DC6B": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet1RouteTableFD76C638"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcstagingIGW6EB96F69"
+        }
+      },
+      "DependsOn": [
+        "vpcstagingVPCGW9CE34181"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/DefaultRoute"
+      }
+    },
+    "vpcstagingIngressSubnet2SubnetE7A9F880": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.74.1.0/24",
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "AvailabilityZone": "ca-central-1b",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/Subnet"
+      }
+    },
+    "vpcstagingIngressSubnet2RouteTableC9A72AF9": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/RouteTable"
+      }
+    },
+    "vpcstagingIngressSubnet2RouteTableAssociationFD081667": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet2RouteTableC9A72AF9"
+        },
+        "SubnetId": {
+          "Ref": "vpcstagingIngressSubnet2SubnetE7A9F880"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/RouteTableAssociation"
+      }
+    },
+    "vpcstagingIngressSubnet2DefaultRouteC84562A4": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet2RouteTableC9A72AF9"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcstagingIGW6EB96F69"
+        }
+      },
+      "DependsOn": [
+        "vpcstagingVPCGW9CE34181"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/DefaultRoute"
+      }
+    },
+    "vpcstagingIngressSubnet3SubnetDFF4155B": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.74.2.0/24",
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "AvailabilityZone": "ca-central-1d",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/Subnet"
+      }
+    },
+    "vpcstagingIngressSubnet3RouteTable0ED17CE6": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/RouteTable"
+      }
+    },
+    "vpcstagingIngressSubnet3RouteTableAssociation9010227B": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet3RouteTable0ED17CE6"
+        },
+        "SubnetId": {
+          "Ref": "vpcstagingIngressSubnet3SubnetDFF4155B"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/RouteTableAssociation"
+      }
+    },
+    "vpcstagingIngressSubnet3DefaultRouteA073E1ED": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcstagingIngressSubnet3RouteTable0ED17CE6"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcstagingIGW6EB96F69"
+        }
+      },
+      "DependsOn": [
+        "vpcstagingVPCGW9CE34181"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/DefaultRoute"
+      }
+    },
+    "vpcstagingIGW6EB96F69": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-staging/vpc-staging"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/IGW"
+      }
+    },
+    "vpcstagingVPCGW9CE34181": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcstagingF0BF23A4"
+        },
+        "InternetGatewayId": {
+          "Ref": "vpcstagingIGW6EB96F69"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-staging/vpc-staging/VPCGW"
+      }
+    }
+  },
+  "Outputs": {
+    "ExportsOutputRefvpcstagingF0BF23A463A94C5D": {
+      "Value": {
+        "Ref": "vpcstagingF0BF23A4"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+      }
+    },
+    "ExportsOutputRefvpcstagingIngressSubnet1Subnet9C6D6AEE8DE04E30": {
+      "Value": {
+        "Ref": "vpcstagingIngressSubnet1Subnet9C6D6AEE"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingIngressSubnet1Subnet9C6D6AEE8DE04E30"
+      }
+    }
+  }
+}

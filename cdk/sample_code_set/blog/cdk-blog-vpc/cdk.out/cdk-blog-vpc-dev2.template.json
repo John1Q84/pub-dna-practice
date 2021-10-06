@@ -1,0 +1,299 @@
+{
+  "Resources": {
+    "vpcdev2A6F85476": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.73.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/Resource"
+      }
+    },
+    "vpcdev2IngressSubnet1Subnet423F170D": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.73.0.0/24",
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "AvailabilityZone": "ca-central-1a",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/Subnet"
+      }
+    },
+    "vpcdev2IngressSubnet1RouteTable0B7DBFD1": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/RouteTable"
+      }
+    },
+    "vpcdev2IngressSubnet1RouteTableAssociation5360480B": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet1RouteTable0B7DBFD1"
+        },
+        "SubnetId": {
+          "Ref": "vpcdev2IngressSubnet1Subnet423F170D"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/RouteTableAssociation"
+      }
+    },
+    "vpcdev2IngressSubnet1DefaultRouteE8A640F2": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet1RouteTable0B7DBFD1"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcdev2IGW5BAB27B0"
+        }
+      },
+      "DependsOn": [
+        "vpcdev2VPCGWE2A738B2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/DefaultRoute"
+      }
+    },
+    "vpcdev2IngressSubnet2Subnet99425F42": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.73.1.0/24",
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "AvailabilityZone": "ca-central-1b",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/Subnet"
+      }
+    },
+    "vpcdev2IngressSubnet2RouteTable0E21D54D": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/RouteTable"
+      }
+    },
+    "vpcdev2IngressSubnet2RouteTableAssociation8F62390B": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet2RouteTable0E21D54D"
+        },
+        "SubnetId": {
+          "Ref": "vpcdev2IngressSubnet2Subnet99425F42"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/RouteTableAssociation"
+      }
+    },
+    "vpcdev2IngressSubnet2DefaultRoute8AC1DC44": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet2RouteTable0E21D54D"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcdev2IGW5BAB27B0"
+        }
+      },
+      "DependsOn": [
+        "vpcdev2VPCGWE2A738B2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/DefaultRoute"
+      }
+    },
+    "vpcdev2IngressSubnet3Subnet10BCEB2F": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.73.2.0/24",
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "AvailabilityZone": "ca-central-1d",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/Subnet"
+      }
+    },
+    "vpcdev2IngressSubnet3RouteTable1828F426": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/RouteTable"
+      }
+    },
+    "vpcdev2IngressSubnet3RouteTableAssociationD12EDBC1": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet3RouteTable1828F426"
+        },
+        "SubnetId": {
+          "Ref": "vpcdev2IngressSubnet3Subnet10BCEB2F"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/RouteTableAssociation"
+      }
+    },
+    "vpcdev2IngressSubnet3DefaultRouteFED092E1": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "vpcdev2IngressSubnet3RouteTable1828F426"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "vpcdev2IGW5BAB27B0"
+        }
+      },
+      "DependsOn": [
+        "vpcdev2VPCGWE2A738B2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/DefaultRoute"
+      }
+    },
+    "vpcdev2IGW5BAB27B0": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc-dev2/vpc-dev2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/IGW"
+      }
+    },
+    "vpcdev2VPCGWE2A738B2": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "vpcdev2A6F85476"
+        },
+        "InternetGatewayId": {
+          "Ref": "vpcdev2IGW5BAB27B0"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-dev2/vpc-dev2/VPCGW"
+      }
+    }
+  },
+  "Outputs": {
+    "ExportsOutputRefvpcdev2A6F854763501C19D": {
+      "Value": {
+        "Ref": "vpcdev2A6F85476"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
+      }
+    },
+    "ExportsOutputRefvpcdev2IngressSubnet1Subnet423F170D50FA36F5": {
+      "Value": {
+        "Ref": "vpcdev2IngressSubnet1Subnet423F170D"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2IngressSubnet1Subnet423F170D50FA36F5"
+      }
+    }
+  }
+}
