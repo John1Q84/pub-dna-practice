@@ -28,18 +28,23 @@ from aws_cdk import (
 
 class CdkEcsFgtStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, repo_arn: str, **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, repo_arn: str, image_uri: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # define stack here       
         # referring https://pypi.org/project/aws-cdk.aws-ecs/
         
         # initializing repository and getting an image
-        myRepo=ecr.Repository.from_repository_arn(
-            self, "myRepo", repo_arn
-        )
-        myImage=ecs.ContainerImage.from_ecr_repository(
-            myRepo, tag=tag  # tag should be one of both, blue or green, inherite
+        #myRepo=ecr.Repository.from_repository_arn(
+        #   self, "myRepo", repo_arn
+        #)
+        #myImage=ecs.ContainerImage.from_ecr_repository(
+        #    myRepo, tag=tag  # tag should be one of both, blue or green, inherite
+        #)
+        
+        ## from here, test from_registry attribute
+        myImage=ecs.ContainerImage.from_registry(
+               image_uri
         )
 
         

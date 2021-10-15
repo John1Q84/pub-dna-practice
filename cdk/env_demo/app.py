@@ -26,7 +26,11 @@ blueEcsFgtServiceStack=ecs(
     alb_sg=sgStack.myAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr" 
+    repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr", 
+    ## arn:${Partition}:ecr-public::${Account}:repository/${RepositoryName}
+    ## public repo uri : public.ecr.aws/n3g9h1h6/ym-ecr/abp:latest
+    image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:blue"
+    
 )
 
 greenEcsFgtServiceStack=ecs(
@@ -36,7 +40,8 @@ greenEcsFgtServiceStack=ecs(
     alb_sg=sgStack.myAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr" 
+    repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr", 
+    image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:green"
 )    
 
 app.synth()
