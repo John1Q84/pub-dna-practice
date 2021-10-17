@@ -9,46 +9,15 @@ from aws_cdk import (
 )
 
 
-#class GetRepoFromEcr(core.Stack):
-#    def __init__(self, scope: core.Construct, id: str, repo_arn: str, **kwargs) -> None:
-#        super().__init__(scope, id, **kwargs)
-#
-#        # Get ECR repo and image info
-#        #self.repository=ecr.Repository(self, "myRepository")
-#        #self.myRepository=self.repository.from_repository_arn(self, "myRepo", repo_arn)
-#        #self.myRepository=ecr.Repository.from_repository_arn(self, "myRepo", repo_arn)
-#
-#    def getRepository(self):
-#        # self.image=ecs.ContainerImage
-#        # myImage=ecs.ContainerImage.fromEcrRepository(repository, tag="Lastest") ## get latest tag by default
-#        
-#        return self.myRepository
-#
-
-
 class CdkEcsFgtStack(core.Stack):
     
-#   def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, repo_arn: str, **kwargs) -> None:
-#       super().__init__(scope, id, **kwargs)
 
-    def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, image_uri: str, **kwargs) -> None:
+
+    def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, image_uri: str, is_public: bool, container_entry_point: [], container_command: [], **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # define stack here       
         # referring https://pypi.org/project/aws-cdk.aws-ecs/
-        
-        ## To use private repo, use below comment out block
-        #######################
-        #
-        ## initializing repository and getting an image
-        #myRepo=ecr.Repository.from_repository_arn(
-        #   self, "myRepo", repo_arn
-        #)
-        #myImage=ecs.ContainerImage.from_ecr_repository(
-        #    myRepo, tag=tag  # tag should be one of both, blue or green, inherite
-        #)
-        #
-        ######################
         
         ## from here, use public docker repository
         myImage=ecs.ContainerImage.from_registry(
@@ -79,7 +48,7 @@ class CdkEcsFgtStack(core.Stack):
 
         myAlb=elb.ApplicationLoadBalancer(
             self, "myAlb_" + tag ,
-            internet_facing=True,
+            internet_facing=is_public,
             load_balancer_name="myAlb-" + tag,
             vpc=vpc,
             security_group=alb_sg
@@ -114,7 +83,9 @@ class CdkEcsFgtStack(core.Stack):
         ## To-Do log configuration is required
         myTaskDefinition.add_container(
             "addContainer_"+tag, image=myImage,
-            entry_point=["/bin/bash", "start.sh"],
+            #entry_point=["/bin/bash", "start.sh"],
+            entry_point=container_entry_point,
+            command=container_command,
             essential=True,
             port_mappings=[ecs.PortMapping(container_port=8080)],
             working_directory="/app",
