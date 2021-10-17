@@ -28,7 +28,7 @@ blueEcsFgtServiceStack=ecs(
     alb_sg=sgStack.myPrivAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    container_entry_point=["/bin/bash", "start.sh"],
+    container_entry_point=["/bin/sh", "start.sh"],
     container_command=[],
     healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/demo || exit 1"],
     image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:blue"
@@ -44,7 +44,7 @@ greenEcsFgtServiceStack=ecs(
     alb_sg=sgStack.myPrivAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    container_entry_point=["/bin/bash", "start.sh"],
+    container_entry_point=["/bin/sh", "start.sh"],
     container_command=[],
     healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/demo || exit 1"],
     image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:green"
@@ -54,14 +54,14 @@ frontEcsFgtServiceStack=ecs(
     app, "myFrontendEcs",
     vpc=vpc_stack.vpc,
     tag="frontend",
-    alb_healthcheck_uri="/index",
+    alb_healthcheck_uri="/front",
     is_public=True,
     alb_sg=sgStack.myPubAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
     container_entry_point=["python"],
     container_command=["app.py"],
-    healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/index || exit 1"],
+    healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/front || exit 1"],
     image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:frontend_latest"
 )
 
