@@ -19,8 +19,8 @@ SITE_NAME = 'http://service.mydomain.int/'
 
 @app.route('/', defaults={'path': '/index'})
 
-@app.route('/index')
-def index():
+@app.route('/front')
+def front():
     d = datetime.datetime.now()
     return render_template(
         'index.html',
