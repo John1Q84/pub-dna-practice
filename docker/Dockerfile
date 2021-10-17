@@ -1,12 +1,14 @@
 #Dockerfile
 
 FROM python:3.9.2-alpine3.13
-COPY demo_app /app
+#COPY demo_app /app
+COPY frontend /app
 RUN apk add curl
 WORKDIR /app
-#RUN source v_demo_app/bin/activate
-#RUN pip3 install -r requirements.txt
+RUN source v_demo_app/bin/activate
+RUN pip3 install -r requirements.txt
 EXPOSE 8080
-ENTRYPOINT ["/bin/sh", "start.sh"]
+#ENTRYPOINT ["/bin/sh", "start.sh"]
+ENTRYPOINT ["python"]
 
-#CMD ["app.py"]
+CMD ["app.py"]
