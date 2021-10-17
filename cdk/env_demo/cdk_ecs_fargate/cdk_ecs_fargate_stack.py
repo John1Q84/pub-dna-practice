@@ -13,7 +13,7 @@ class CdkEcsFgtStack(core.Stack):
     
 
 
-    def __init__(self, scope: core.Construct, id: str, tag: str, vpc, alb_sg, ecs_sg, cluster, image_uri: str, is_public: bool, container_entry_point: [], container_command: [], **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, tag: str, alb_healthcheck_uri: str, vpc, alb_sg, ecs_sg, cluster, image_uri: str, is_public: bool, container_entry_point: [], container_command: [], healthcheck_command: [], **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # define stack here       
@@ -39,7 +39,7 @@ class CdkEcsFgtStack(core.Stack):
                 healthy_threshold_count=2,
                 interval=core.Duration.seconds(7),
                 timeout=core.Duration.seconds(5),
-                path="/demo",
+                path=alb_healthcheck_uri,
                 unhealthy_threshold_count=2
             ),
             target_type=elb.TargetType("IP")
@@ -94,7 +94,7 @@ class CdkEcsFgtStack(core.Stack):
                     retries=3,                    
                     interval=core.Duration.seconds(15),                    
                     timeout=core.Duration.seconds(20),
-                    command=["CMD-SHELL", "curl -f localhost:8080/demo || exit 1"],
+                    command=healthcheck_command,
             )                        
         )
 
