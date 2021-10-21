@@ -23,11 +23,14 @@ blueEcsFgtServiceStack=ecs(
     app, "myAwsomeEcsBlue", 
     vpc=vpc_stack.vpc,
     tag="blue",
-    alb_sg=sgStack.myAlbSecurityGroup,
+    is_public=False,
+    alb_healthcheck_uri="/demo",
+    alb_sg=sgStack.myPrivAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    # repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr", 
-    ## public repo uri : public.ecr.aws/n3g9h1h6/ym-ecr/abp:latest
+    container_entry_point=["/bin/sh", "start.sh"],
+    container_command=[],
+    healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/demo || exit 1"],
     image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:blue"
     
 )
@@ -36,11 +39,30 @@ greenEcsFgtServiceStack=ecs(
     app, "myAwsomeEcsGreen", 
     vpc=vpc_stack.vpc,
     tag="green",
-    alb_sg=sgStack.myAlbSecurityGroup,
+    is_public=False,
+    alb_healthcheck_uri="/demo",
+    alb_sg=sgStack.myPrivAlbSecurityGroup,
     ecs_sg=sgStack.myEcsSecurityGroup,
     cluster=ecsFgtClusterStack.myCluster,
-    # repo_arn = "arn:aws:ecr:ap-northeast-2:499656329194:repository/ym_demo_ecr", 
+    container_entry_point=["/bin/sh", "start.sh"],
+    container_command=[],
+    healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/demo || exit 1"],
     image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:green"
 )    
+
+frontEcsFgtServiceStack=ecs(
+    app, "myFrontendEcs",
+    vpc=vpc_stack.vpc,
+    tag="frontend",
+    alb_healthcheck_uri="/front",
+    is_public=True,
+    alb_sg=sgStack.myPubAlbSecurityGroup,
+    ecs_sg=sgStack.myEcsSecurityGroup,
+    cluster=ecsFgtClusterStack.myCluster,
+    container_entry_point=["python"],
+    container_command=["app.py"],
+    healthcheck_command=["CMD-SHELL", "curl -f localhost:8080/front || exit 1"],
+    image_uri="public.ecr.aws/n3g9h1h6/ym-ecr/abp:frontend_latest"
+)
 
 app.synth()
